@@ -20,6 +20,7 @@ Factory.blueprint('App/Models/Yazilar', (faker) => {
         icerik:faker.paragraph()
    }
 })
+/*
 Factory.blueprint('App/Models/Kategoriler', (faker) => {
     return {
         baslik:faker.sentence({words:2}),
@@ -27,3 +28,4 @@ Factory.blueprint('App/Models/Kategoriler', (faker) => {
         resim:"no-image.png"
    }
 })
+*/
