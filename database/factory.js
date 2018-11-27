@@ -16,7 +16,7 @@ Factory.blueprint('App/Models/Yazilar', (faker) => {
         url:faker.sentence({words:1}),
         kategori_id:1,
         onecikan:0,
-        onicerik:faker.sentence({words:35}),
+        onicerik:faker.sentence({words:55}),
         icerik:faker.paragraph()
    }
 })

@@ -16,5 +16,8 @@ class Yazilar extends Model {
     kategori(){
         return this.hasMany('App/Models/Kategoriler',"kategori_id","id")
     }
+    yorum(){
+        return this.hasMany('App/Models/Yorumlar',"id","yazi_id")
+    }
 }
 module.exports = Yazilar

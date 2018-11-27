@@ -3,18 +3,19 @@
   @each(yazi in yazilar.data)
     <div class="w3-third w3-container w3-margin-bottom">
       <div class="w3-display-container">
-        <a href="/yazi/{{yazi.url}}"><img src="https://www.w3schools.com/w3images/mountains.jpg" alt="{{yazi.baslik}}" style="width:100%" class="w3-hover-opacity"></a>
         @each(kategori in yazi.kategori) 
+          <img src="/resimler/{{ kategori.resim }}" style="width:100%" >
           <a href="/kategori/{{ kategori.url }}"><div class="w3-display-bottomright w3-container w3-black">{{ kategori.baslik }}</div></a>
         @endeach
       </div> 
       <div class="w3-container w3-white" align="justify"> 
         <p><b><a href="/yazi/{{yazi.url}}">{{yazi.baslik}}</a></b></p>
-        <p>{{yazi.onicerik.substring(0, 200)}}...</p> 
+        <p>{{yazi.onicerik.substring(0, 200)}}...</p>
       </div>
     </div>
   @endeach
-  <div class="w3-third w3-container w3-margin-bottom">
+  <br><hr><br>
+  <div class="w3-third w3-container w3-margin-top">
     @each(number in range(1,yazilar.lastPage+1))
         @if(yazilar.page == number) 
           <a class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">{{yazilar.page}}</a> 

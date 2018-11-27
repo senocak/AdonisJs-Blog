@@ -2,9 +2,9 @@
 @section('icerik')  
     @each(yazi_detay in yazi) 
         <div class="w3-card-4 w3-margin w3-white"> 
-            <div class="w3-display-container">
-                <img src="https://www.w3schools.com/w3images/mountains.jpg" alt="{{yazi.baslik}}" style="width:100%" >
+            <div class="w3-display-container w3-card-4">
                 @each(kategori in yazi_detay.kategori) 
+                    <img src="/resimler/{{ kategori.resim }}" style="width:100%" >
                     <a href="/kategori/{{ kategori.url }}"><div class="w3-display-bottomright w3-container w3-black">{{ kategori.baslik }}</div></a>
                 @endeach
             </div>  
@@ -15,6 +15,36 @@
             <div class="w3-container" align="justify">
                 <p>{{{yazi_detay.icerik}}}}</p> 
             </div>
-        </div> 
+        </div>
+        <div class="w3-container w3-margin-bottom ">
+            <form method="POST" action="{{route('yazilar.yorum_ekle',{id:yazi_detay.id})}}">
+                {{ csrfField() }}
+                <input type="text" class="w3-input" name="isim" placeholder="İsminiz" value="{{old('isim')}}">
+                @if(hasErrorFor('isim'))
+                    {{getErrorFor('isim')}}
+                @endif
+                <input type="email" class="w3-input" name="email" placeholder="Email" value="{{old('email')}}">
+                @if(hasErrorFor('email'))
+                    {{getErrorFor('email')}}
+                @endif
+                <textarea class="w3-input" name="yorum" placeholder="Yorumunuz" style="resize:none" rows="3">{{old('yorum')}}</textarea>
+                @if(hasErrorFor('yorum'))
+                    {{getErrorFor('yorum')}}
+                @endif
+                <input type="submit" class="w3-btn w3-block w3-green" value="Gönder">
+            </form>
+        </div>
+        <div class="w3-container w3-margin-bottom ">
+            @each(yorum in yazi_detay.yorum)  
+                <div class="w3-card-4">
+                    <header class="w3-container w3-white w3-card-4"><h3>{{yorum.isim}}<small style="font-size: 12px;"> {{yorum.created_at}}</small></h3></header>
+                    <div class="w3-container w3-white">  
+                        <img src="/resimler/avatar.png" width="80px" alt="Avatar" class="w3-left w3-circle">
+                        <p>{{yorum.yorum}}</p>
+                    </div> 
+                </div> 
+                <br>
+            @endeach
+        </div>
     @endeach
 @endsection
