@@ -1,0 +1,22 @@
+@layout('index')
+@section('icerik') 
+  @each(yazi in yazilar.data)
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="/yazi/{{yazi.url}}"><img src="https://www.w3schools.com/w3images/mountains.jpg" alt="{{yazi.baslik}}" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white"> 
+        <p><b><a href="/yazi/{{yazi.url}}">{{yazi.baslik}}</a></b></p>
+        <p align="justify">{{yazi.onicerik.substring(0, 200)}}...</p> 
+      </div>
+    </div> 
+  @endeach
+  <div class="w3-third w3-container w3-margin-bottom">
+    @each(number in range(1,yazilar.lastPage+1))
+        @if(yazilar.page == number) 
+          <a class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">{{yazilar.page}}</a> 
+        @else
+          <a href="/sayfa/{{number}}" class="w3-button w3-black w3-padding-large w3-margin-bottom">{{ number }}</a>
+        @endif 
+    @endeach
+    <a href="/sayfa/{{yazilar.lastPage}}" class="w3-button w3-black w3-padding-large w3-margin-bottom">»</a>
+  </div>
+@endsection

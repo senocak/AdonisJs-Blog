@@ -1,0 +1,15 @@
+@layout('index')
+@section('icerik')  
+    @each(yazi in yaziGet) 
+    <div class="w3-card-4 w3-margin w3-white">
+        <img src="https://www.w3schools.com/w3images/mountains.jpg" alt="Nature" style="width:100%">
+        <div class="w3-container">
+            <h3><b>{{yazi.baslik}}</b></h3>
+            <h5>{{yazi.kategori_id}}, <span class="w3-opacity">{{yazi.created_at}}</span></h5>
+        </div>
+        <div class="w3-container" align="justify">
+            <p>{{{yazi.icerik}}}}</p> 
+        </div>
+    </div> 
+  @endeach
+@endsection
