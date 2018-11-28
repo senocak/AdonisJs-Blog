@@ -1,4 +1,36 @@
 @layout('index')
+
+@section('kategoriler')
+<div class="w3-container w3-padding"><h4>Kategoriler</h4></div>
+  <ul class="w3-ul w3-hoverable w3-white">
+    @each(kategori in kategoriler)
+      <li class="w3-padding-16">
+          <a href="/kategori/{{ kategori.url }}">
+            <img src="/resimler/{{ kategori.resim }}" alt="{{kategori.baslik}}" class="w3-left w3-margin-right" style="width:50px">
+            <span class="w3-large">{{kategori.baslik}}</span>
+          </a>
+      </li>
+      @endeach
+  </ul>
+@endsection
+
+@section('yorumlar')
+<div class="w3-container w3-padding"><h4>Yorumlar</h4></div>
+  <ul class="w3-ul w3-hoverable w3-white">
+    @each(yorum in yorumlar)
+        <li class="w3-padding-16">
+            @each(yazi in yorum.yazilar)
+                <a href="/yazi/{{yazi.url}}"><img src="/resimler/avatar.png" class="w3-left w3-margin-right w3-left w3-circle" style="width:30px"></a>
+            @endeach
+            <span class="w3-large">{{yorum.isim}}</span><br>
+            @each(yazi in yorum.yazilar)
+                <span>{{yazi.baslik}}</span>
+            @endeach
+        </li>
+    @endeach
+  </ul>
+@endsection
+
 @section('icerik')  
     @each(yazi_detay in yazi) 
         <div class="w3-card-4 w3-margin w3-white"> 

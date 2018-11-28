@@ -5,7 +5,7 @@ class YorumEkle {
     return {
       isim:"required|min:3",
       email:"required|email",
-      yorum:"required|min10"
+      yorum:"required|min:10"
     }
   }
   get messages () {
