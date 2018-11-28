@@ -14,7 +14,7 @@ class KategoriSeeder {
     })
     await Kategoriler.create({
       baslik:"CodeIgniter",
-      url:"codeIgniter",
+      url:"codeigniter",
       resim:"codeIgniter.png"
     })
     await Kategoriler.create({

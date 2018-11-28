@@ -37,7 +37,21 @@ class YazilarController {
     session.flash({successMessage:"Yorumunuz Onaylandıktan Sonra Gösterilecektir"})
     return response.route("yazilar.yazi",{ yazi: "lorem_ipsum_nedir1" })
   }
-  async store ({ request, response }) {
+  async kategori_kategori ({ params, view }) { 
+    const kategori = params.kategori
+    
+    const kategoriler = await Kategoriler.all()
+    const yorumlar = await Yorumlar.query().with("yazilar").limit(4).fetch() 
+    const sayfa_degisken=params.sayfa ? params.sayfa : 1
+    const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(sayfa_degisken ,9)  
+    if(sayfa_degisken > yazilar.toJSON().lastPage){
+      const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(1 ,9)
+      return view.render("kategori",{yazilar:yazilar.toJSON(),kategoriler:kategoriler.toJSON(),yorumlar:yorumlar.toJSON(),kategori})
+    }else{
+      const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(sayfa_degisken ,9)
+      return view.render("kategori",{yazilar:yazilar.toJSON(),kategoriler:kategoriler.toJSON(),yorumlar:yorumlar.toJSON(),kategori})
+    }
+
   }
   async show ({ params,view }){
     const kategoriler = await Kategoriler.all()

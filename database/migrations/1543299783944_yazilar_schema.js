@@ -11,7 +11,7 @@ class YazilarSchema extends Schema {
       table.string("url")
       table.string("onicerik")
       table.text('icerik')
-      table.integer("kategori_id")
+      table.string("kategori_url")
       table.integer("onecikan").default(0)
       table.timestamps()
     })

@@ -14,18 +14,9 @@ Factory.blueprint('App/Models/Yazilar', (faker) => {
     return {
         baslik:faker.sentence({words:3}),
         url:faker.sentence({words:1}),
-        kategori_id:1,
+        kategori_url:"adonisjs",
         onecikan:0,
         onicerik:faker.sentence({words:55}),
         icerik:faker.paragraph()
    }
 })
-/*
-Factory.blueprint('App/Models/Kategoriler', (faker) => {
-    return {
-        baslik:faker.sentence({words:2}),
-        url:faker.sentence({words:1}),
-        resim:"no-image.png"
-   }
-})
-*/

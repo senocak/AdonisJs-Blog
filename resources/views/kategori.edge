@@ -1,0 +1,64 @@
+@layout('index')
+
+@section('kategoriler')
+<div class="w3-container w3-padding"><h4>Kategoriler</h4></div>
+  <ul class="w3-ul w3-hoverable w3-white">
+    @each(kategori in kategoriler)
+      <li class="w3-padding-16">
+          <a href="/kategori/{{ kategori.url }}">
+            <img src="/resimler/{{ kategori.resim }}" alt="{{kategori.baslik}}" class="w3-left w3-margin-right" style="width:50px">
+            <span class="w3-large">{{kategori.baslik}}</span>
+          </a>
+      </li>
+      @endeach
+  </ul>
+@endsection
+
+@section('yorumlar')
+<div class="w3-container w3-padding"><h4>Yorumlar</h4></div>
+  <ul class="w3-ul w3-hoverable w3-white">
+    @each(yorum in yorumlar)
+        <li class="w3-padding-16">
+            @each(yazi in yorum.yazilar)
+                <a href="/yazi/{{yazi.url}}"><img src="/resimler/avatar.png" class="w3-left w3-margin-right w3-left w3-circle" style="width:30px"></a>
+            @endeach
+            <span class="w3-large">{{yorum.isim}}</span><br>
+            @each(yazi in yorum.yazilar)
+                <span>{{yazi.baslik}}</span>
+            @endeach
+        </li>
+    @endeach
+  </ul>
+@endsection
+
+@section('icerik') 
+  @each(yazi in yazilar.data)
+    <div class="w3-third w3-container w3-margin-bottom">
+      <div class="w3-display-container">
+        @each(kategori in yazi.kategori) 
+          <img src="/resimler/{{ kategori.resim }}" style="width:100%" >
+          <a href="/kategori/{{ kategori.url }}"><div class="w3-display-bottomright w3-container w3-black">{{ kategori.baslik }}</div></a>
+        @endeach
+      </div> 
+      <div class="w3-container w3-white" align="justify"> 
+        <p><b><a href="/yazi/{{yazi.url}}">{{yazi.baslik}}</a></b></p>
+        <p>{{yazi.onicerik.substring(0, 200)}}...</p>
+      </div>
+    </div>
+  @endeach
+  <br><hr><br>
+  <div class="w3-third w3-container w3-margin-top">
+    @each(number in range(1,yazilar.lastPage+1))
+        @if(yazilar.lastPage>1)
+            @if(yazilar.page == number) 
+                <a class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">{{yazilar.page}}</a> 
+            @else
+                <a href="/kategori/{{kategori}}/sayfa/{{number}}" class="w3-button w3-black w3-padding-large w3-margin-bottom">{{ number }}</a>
+            @endif
+        @endif 
+    @endeach
+    @if(yazilar.lastPage>1)
+        <a href="/kategori/{{kategori}}/sayfa/{{yazilar.lastPage}}" class="w3-button w3-black w3-padding-large w3-margin-bottom">»</a>
+    @endif
+</div>
+@endsection
