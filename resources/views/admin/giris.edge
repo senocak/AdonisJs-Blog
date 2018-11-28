@@ -1,0 +1,24 @@
+@layout('admin.index')
+@section('admin_icerik')
+    <form method="POST" action="{{route('admin.giris_post')}}"> 
+        {{ csrfField() }}
+        <div class="container">
+            <br><br>
+
+            <label for="uname"><b>Email</b></label>
+            <input type="text" placeholder="Email Adresiniz" name="email" required class="w3-input">
+            @if(hasErrorFor('email'))
+                {{getErrorFor('email')}}
+            @endif
+
+            <label for="psw"><b>Şifreniz</b></label>
+            <input type="password" placeholder="Şifreniz" name="sifre" required class="w3-input">
+            @if(hasErrorFor('sifre'))
+                {{getErrorFor('sifre')}}
+            @endif
+            
+            <br>
+            <input type="submit" class="w3-button w3-btn w3-block w3-green" value="Giriş Yap"> 
+        </div> 
+    </form> 
+@endsection

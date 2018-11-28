@@ -39,7 +39,6 @@ class YazilarController {
   }
   async kategori_kategori ({ params, view }) { 
     const kategori = params.kategori
-    
     const kategoriler = await Kategoriler.all()
     const yorumlar = await Yorumlar.query().with("yazilar").limit(4).fetch() 
     const sayfa_degisken=params.sayfa ? params.sayfa : 1
@@ -51,7 +50,6 @@ class YazilarController {
       const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(sayfa_degisken ,9)
       return view.render("kategori",{yazilar:yazilar.toJSON(),kategoriler:kategoriler.toJSON(),yorumlar:yorumlar.toJSON(),kategori})
     }
-
   }
   async show ({ params,view }){
     const kategoriler = await Kategoriler.all()

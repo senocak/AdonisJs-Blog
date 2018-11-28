@@ -1,0 +1,30 @@
+@layout('admin.index')
+@section('admin_icerik')
+    <form method="POST" action="{{route('admin.giris_post')}}"> 
+        {{ csrfField() }} 
+        <input type="text" placeholder="Yazı Başlık" name="baslik" required class="w3-input">
+        @if(hasErrorFor('baslik'))
+            {{getErrorFor('baslik')}}
+        @endif
+
+        <textarea placeholder="Ön İçerik" name="onicerik" style="resize:none" rows="3" class="w3-input"></textarea>
+        @if(hasErrorFor('sifre'))
+            {{getErrorFor('sifre')}}
+        @endif
+
+        <textarea placeholder=" İçerik" name="icerik" style="resize:none" rows="3" class="ckeditor"></textarea>
+        @if(hasErrorFor('sifre'))
+            {{getErrorFor('sifre')}}
+        @endif
+        <br>
+
+        <select class="w3-select w3-input" name="kategori" required>
+            <option disabled selected>Kategori Seç</option>
+            @each(kategori in kategoriler)
+                <option value="{{kategori.url}}">{{kategori.baslik}}</option>  
+            @endeach
+        </select>
+        <br>
+        <input type="submit" class="w3-button w3-btn w3-block w3-green" value="Giriş Yap">  
+    </form> 
+@endsection

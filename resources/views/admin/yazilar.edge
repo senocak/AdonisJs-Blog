@@ -1,0 +1,21 @@
+@layout('admin.index')
+@section('admin_icerik')
+    <table class="w3-table-all">
+        <tr>
+            <th>ID</th>
+            <th>Başlık</th>
+            <th>Kategori</th>
+            <th>İşlemler</th>
+        </tr>
+        @each(yazi in yazilar)
+            <tr>
+                <td>{{yazi.id}}</td>
+                <td><a href="/yazi/{{yazi.url}}" target="_blank">{{yazi.baslik}}</a></td>
+                @each(kategori in yazi.kategori)  
+                    <td><a href="/kategori/{{kategori.url}}" target="_blank">{{kategori.baslik}}</a></td>
+                @endeach
+                <td><a href="/admin/yazilar/{{yazi.id}}/duzenle"><i class="fa fa-edit"></i></a> <a href="/admin/yazilar/{{yazi.id}}/sil"><i class="fa fa-remove"></i></a></td>
+            </tr>
+        @endeach
+    </table>
+@endsection
