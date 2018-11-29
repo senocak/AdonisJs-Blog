@@ -1,8 +1,10 @@
 'use strict'
-const User = use('App/Models/User')
+const User = use('App/Models/User') 
 const Yazilar = use('App/Models/Yazilar')
 const Kategoriler = use('App/Models/Kategoriler')
+const Yorumlar = use('App/Models/Yorumlar')
 const Helpers = use('Helpers')
+const Drive = use('Drive')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -21,9 +23,13 @@ class AdminController {
     session.flash({successMessage:"Giriş Başarılı"}) 
     return response.redirect("yazilar")
   }
-  async yazilar ({ request, view }) { 
-    const yazilar = await Yazilar.query().with("kategori").orderBy("id","desc").orderBy("onecikan","desc").fetch()
-    return view.render("admin.yazilar",{yazilar:yazilar.toJSON()})
+  async yazilar ({ request, view }){
+    if(auth.user){
+      const yazilar = await Yazilar.query().with("kategori").orderBy("id","desc").orderBy("onecikan","desc").fetch()
+      return view.render("admin.yazilar",{yazilar:yazilar.toJSON()})
+    }else{
+      return view.render("admin.giris")
+    }
   }
   async yazilar_ekle ({view }) {
     const kategoriler = await Kategoriler.all()
@@ -90,14 +96,12 @@ class AdminController {
     return view.render("admin.kategoriler_ekle")
   } 
   async kategoriler_ekle_post ({ request, response,session }){
-     
     const file = request.file('resim')
     if(file.type=="image" ){
       file.move(Helpers.publicPath('resimler'))
       const resim_ismi=file.clientName
       const baslik = request.input("baslik")
       const url = request.input("url") 
-    
       const kategoriler = await Kategoriler.create({
         baslik:baslik,
         url:url,
@@ -110,6 +114,34 @@ class AdminController {
       return response.route("admin.kategoriler")
     }
   } 
+  async kategoriler_sil ({ params, session,response }){
+    return "I couldn't find to document about deleting files so I will do it when I find it"
+    const kategori_id = params.kategori_id
+    const kategoriler = await Kategoriler.findOrFail(kategori_id) 
+    //Drive.delete(kategoriler.resim)
+    //const exists = await Drive.exists("adonis_blog.sql")
+    return kategoriler.resim
+    await kategoriler.delete()
+    session.flash({successMessage:"Kategori Silindi"})
+    return response.route("admin.yazilar")
+  }
+  async yorumlar ({ view }){
+    const yorumlar = await Yorumlar.all() 
+    return view.render("admin.yorumlar",{yorumlar:yorumlar.toJSON()})
+  }
+  async yorumlar_onay ({ params,session,response }){
+    const yorum_id = params.yorum_id
+    const durum = params.durum
+    const yorumlar = await Yorumlar.findOrFail(yorum_id)
+    yorumlar.onay=durum
+    await yorumlar.save()
+    session.flash({successMessage:"Yorum Güncellendi"})
+    return response.route("admin.yorumlar")
+  }
+  async cikis ({ auth, response }) {
+    await auth.logout()
+    return response.redirect("/admin/giris")
+  }
 }
 
 module.exports = AdminController

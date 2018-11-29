@@ -1,0 +1,25 @@
+@layout('admin.index')
+@section('admin_icerik')
+    <table class="w3-table-all">
+        <tr>
+            <th>ID</th> 
+            <th>İsim</th> 
+            <th>Email</th> 
+            <th>Onay</th>
+        </tr>
+        @each(yorum in yorumlar)
+            <tr>
+                <td>{{yorum.id}}</td> 
+                <td>{{yorum.isim}}</td>
+                <td>{{yorum.email}}</td>
+                <td>
+                    @if(yorum.onay=="0")
+                    <a href="/admin/yorumlar/{{yorum.id}}/onay/1"><i class="fa fa-check"></i></a>
+                    @else
+                        <a href="/admin/yorumlar/{{yorum.id}}/onay/0"><i class="fa fa-remove"></i></a>
+                    @endif
+                </td>
+            </tr>
+        @endeach
+    </table>
+@endsection

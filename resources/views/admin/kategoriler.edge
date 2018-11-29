@@ -13,8 +13,7 @@
                 <td><img src="/resimler/{{kategori.resim}}" width="150px"></td>
                 <td><a href="/kategori/{{kategori.url}}" target="_blank">{{kategori.baslik}}</a></td>
                 <td>
-                    <a href="/admin/yazilar/{{yazi.id}}/duzenle"><i class="fa fa-edit"></i></a>
-                    <a href="/admin/yazilar/{{yazi.id}}/sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?')"><i class="fa fa-remove"></i></a>
+                    <a href="/admin/kategoriler/{{kategori.id}}/sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?')"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         @endeach
