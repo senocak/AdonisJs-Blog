@@ -1,0 +1,22 @@
+@layout('admin.index')
+@section('admin_icerik')
+    <table class="w3-table-all">
+        <tr>
+            <th>ID</th>
+            <th>Resim</th> 
+            <th>Başlık</th> 
+            <th>İşlemler</th>
+        </tr>
+        @each(kategori in kategoriler)
+            <tr>
+                <td>{{kategori.id}}</td>
+                <td><img src="/resimler/{{kategori.resim}}" width="150px"></td>
+                <td><a href="/kategori/{{kategori.url}}" target="_blank">{{kategori.baslik}}</a></td>
+                <td>
+                    <a href="/admin/yazilar/{{yazi.id}}/duzenle"><i class="fa fa-edit"></i></a>
+                    <a href="/admin/yazilar/{{yazi.id}}/sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?')"><i class="fa fa-remove"></i></a>
+                </td>
+            </tr>
+        @endeach
+    </table>
+@endsection

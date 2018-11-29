@@ -1,0 +1,44 @@
+@layout('admin.index')
+@section('admin_icerik')
+    @each(yazi in yazilar)
+        <form method="POST" action="{{ route('admin.yazilar_duzenle_post',{yazi_id:yazi.id}) }}"> 
+            {{ csrfField() }} 
+            <input type="text" placeholder="Yazı Başlık" name="baslik" required class="w3-input" id="baslik" onkeyup="a()" value="{{yazi.baslik}}" >
+            @if(hasErrorFor('baslik'))
+                {{getErrorFor('baslik')}}
+            @endif
+            <input type="text" readonly name="url" required class="w3-input w3-light-gray" id="url" placeholder="URL" value="{{yazi.url}}">
+
+            <textarea placeholder="Ön İçerik" name="onicerik" style="resize:none" rows="3" class="w3-input">{{yazi.onicerik}}</textarea>
+            @if(hasErrorFor('onicerik'))
+                {{getErrorFor('onicerik')}}
+            @endif
+
+            <textarea placeholder="İçerik" name="icerik" style="resize:none" rows="3" class="ckeditor">{{yazi.icerik}}</textarea>
+            @if(hasErrorFor('icerik'))
+                {{getErrorFor('icerik')}}
+            @endif
+            <br>
+
+            <select class="w3-select w3-input" name="kategori_url" required > 
+                @each(yazi_kategori in yazi.kategori)
+                    <option value="{{yazi_kategori.url}}" disabled selected>{{yazi_kategori.baslik}}</option>  
+                @endeach
+                @each(kategori in kategoriler)
+                    <option value="{{kategori.url}}">{{kategori.baslik}}</option>  
+                @endeach
+            </select>
+            <br>
+            <input type="submit" class="w3-button w3-btn w3-block w3-green" value="Güncelle">  
+        </form> 
+    @endeach
+    <script>
+        function a(){
+            var text = document.getElementById("baslik").value;
+            text = text.toLowerCase()
+            text = text.replace(/[0-9]/g, '');
+            var string= text.split(' ').join('-'); 
+            document.getElementById("url").value=string;
+        }
+    </script> 
+@endsection

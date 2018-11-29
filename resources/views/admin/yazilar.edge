@@ -5,6 +5,7 @@
             <th>ID</th>
             <th>Başlık</th>
             <th>Kategori</th>
+            <th>Öne Çıkan</th>
             <th>İşlemler</th>
         </tr>
         @each(yazi in yazilar)
@@ -14,7 +15,17 @@
                 @each(kategori in yazi.kategori)  
                     <td><a href="/kategori/{{kategori.url}}" target="_blank">{{kategori.baslik}}</a></td>
                 @endeach
-                <td><a href="/admin/yazilar/{{yazi.id}}/duzenle"><i class="fa fa-edit"></i></a> <a href="/admin/yazilar/{{yazi.id}}/sil"><i class="fa fa-remove"></i></a></td>
+                <td>
+                    @if(yazi.onecikan==1)
+                        <a href="/admin/yazilar/{{yazi.id}}/onecikan/0" ><i class="fa fa-minus"></i></a>
+                    @else
+                        <a href="/admin/yazilar/{{yazi.id}}/onecikan/1"><i class="fa fa-plus"></i></a>
+                    @endif
+                </td>
+                <td>
+                    <a href="/admin/yazilar/{{yazi.id}}/duzenle"><i class="fa fa-edit"></i></a>
+                    <a href="/admin/yazilar/{{yazi.id}}/sil" onclick="return confirm('Silmek İstediğinize Emin Misiniz?')"><i class="fa fa-remove"></i></a>
+                </td>
             </tr>
         @endeach
     </table>

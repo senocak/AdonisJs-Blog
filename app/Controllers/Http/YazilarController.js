@@ -42,12 +42,12 @@ class YazilarController {
     const kategoriler = await Kategoriler.all()
     const yorumlar = await Yorumlar.query().with("yazilar").limit(4).fetch() 
     const sayfa_degisken=params.sayfa ? params.sayfa : 1
-    const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(sayfa_degisken ,9)  
+    const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").orderBy("id","desc").paginate(sayfa_degisken ,9)  
     if(sayfa_degisken > yazilar.toJSON().lastPage){
-      const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(1 ,9)
+      const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").orderBy("id","desc").paginate(1 ,9)
       return view.render("kategori",{yazilar:yazilar.toJSON(),kategoriler:kategoriler.toJSON(),yorumlar:yorumlar.toJSON(),kategori})
     }else{
-      const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").paginate(sayfa_degisken ,9)
+      const yazilar = await Yazilar.query().with("kategori").where("kategori_url",kategori).with("yorum").orderBy("onecikan","desc").orderBy("id","desc").paginate(sayfa_degisken ,9)
       return view.render("kategori",{yazilar:yazilar.toJSON(),kategoriler:kategoriler.toJSON(),yorumlar:yorumlar.toJSON(),kategori})
     }
   }

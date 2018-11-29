@@ -1,0 +1,24 @@
+@layout('admin.index')
+@section('admin_icerik')
+    <form method="POST" action="{{route('admin.kategoriler_ekle_post')}}" enctype="multipart/form-data"> 
+        {{ csrfField() }} 
+        <input type="text" placeholder="Kategori Başlık" name="baslik" required class="w3-input" id="baslik" onkeyup="a()" >
+        @if(hasErrorFor('baslik'))
+            {{getErrorFor('baslik')}}
+        @endif
+        <input type="text" readonly name="url" required class="w3-input w3-light-gray" id="url" placeholder="URL">
+
+        <input type="file" name="resim" required class="w3-input"/>
+        <br>
+        <input type="submit" class="w3-button w3-btn w3-block w3-green" value="Ekle">  
+    </form> 
+    <script>
+        function a(){
+            var text = document.getElementById("baslik").value;
+            text = text.toLowerCase()
+            text = text.replace(/[0-9]/g, '');
+            var string= text.split(' ').join('-'); 
+            document.getElementById("url").value=string;
+        }
+    </script> 
+@endsection

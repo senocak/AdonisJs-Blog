@@ -1,20 +1,21 @@
 @layout('admin.index')
 @section('admin_icerik')
-    <form method="POST" action="{{route('admin.giris_post')}}"> 
+    <form method="POST" action="{{route('admin.yazilar_ekle_post')}}"> 
         {{ csrfField() }} 
-        <input type="text" placeholder="Yazı Başlık" name="baslik" required class="w3-input">
+        <input type="text" placeholder="Yazı Başlık" name="baslik" required class="w3-input" id="baslik" onkeyup="a()" >
         @if(hasErrorFor('baslik'))
             {{getErrorFor('baslik')}}
         @endif
+        <input type="text" readonly name="url" required class="w3-input w3-light-gray" id="url" placeholder="URL">
 
         <textarea placeholder="Ön İçerik" name="onicerik" style="resize:none" rows="3" class="w3-input"></textarea>
-        @if(hasErrorFor('sifre'))
-            {{getErrorFor('sifre')}}
+        @if(hasErrorFor('onicerik'))
+            {{getErrorFor('onicerik')}}
         @endif
 
-        <textarea placeholder=" İçerik" name="icerik" style="resize:none" rows="3" class="ckeditor"></textarea>
-        @if(hasErrorFor('sifre'))
-            {{getErrorFor('sifre')}}
+        <textarea placeholder="İçerik" name="icerik" style="resize:none" rows="3" class="ckeditor"></textarea>
+        @if(hasErrorFor('icerik'))
+            {{getErrorFor('icerik')}}
         @endif
         <br>
 
@@ -25,6 +26,15 @@
             @endeach
         </select>
         <br>
-        <input type="submit" class="w3-button w3-btn w3-block w3-green" value="Giriş Yap">  
+        <input type="submit" class="w3-button w3-btn w3-block w3-green" value="Ekle">  
     </form> 
+    <script>
+        function a(){
+            var text = document.getElementById("baslik").value;
+            text = text.toLowerCase()
+            text = text.replace(/[0-9]/g, '');
+            var string= text.split(' ').join('-'); 
+            document.getElementById("url").value=string;
+        }
+    </script> 
 @endsection
